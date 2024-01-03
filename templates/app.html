@@ -46,7 +46,7 @@
                   </a>
                   <ul class="nav-main-submenu">
                     <li class="nav-main-item">
-                      <a class="nav-main-link" href="">
+                      <a class="nav-main-link" href="{%url 'cadpessoal.index' %}">
                         <i class="nav-main-link-icon fa-solid fa-user-group"></i>
                         <span class="nav-main-link-name">Registros</span>
                       </a>
@@ -54,7 +54,7 @@
                     {% if perms %}
                     <li class="nav-main-item">
                       <a class="nav-main-link" href="">
-                        <i class="nav-main-link-icon"></i>
+                        <i class="nav-main-link-icon fa-solid fa-plus"></i>
                         <span class="nav-main-link-name">Novo Cadastro</span>
                       </a>
                     </li>
@@ -120,7 +120,7 @@
                     <li class="nav-main-item">
                       <a class="nav-main-link" href="">
                         <i class="nav-main-link-icon"></i>
-                        <span class="nav-main-link-name">Submenu</span>
+                        <span class="nav-main-link-name">Submenu 1</span>
                       </a>
                     </li>
                     {% endif %}
@@ -131,20 +131,31 @@
             <li class="nav-main-item">
               <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                 aria-expanded="false" href="#">
-                <i class="nav-main-link-icon "></i>
-                <span class="nav-main-link-name">Menu 3</span>
+                <i class="nav-main-link-icon fa-solid fa-chart-line"></i>
+                <span class="nav-main-link-name">Dashboards</span>
               </a>
               <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                  <a class="nav-main-link" href="">
+                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                    aria-expanded="false" href="#">
                     <i class="nav-main-link-icon"></i>
-                    <span class="nav-main-link-name">Submenu</span>
+                    <span class="nav-main-link-name">Menu 1</span>
                   </a>
-                </li>
+                  <ul class="nav-main-submenu">
+
+                    {% if perms %}
+                    <li class="nav-main-item">
+                      <a class="nav-main-link" href="">
+                        <i class="nav-main-link-icon"></i>
+                        <span class="nav-main-link-name">Submenu 1</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
               </ul>
             </li>
 
-            {% if user.is_superuser %} !
+            {% if user.is_superuser %}
               <li class="nav-main-item">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                   aria-expanded="false" href="#">
@@ -160,7 +171,7 @@
                   </li>
                 </ul>
               </li>
-            {% endif %} !
+            {% endif %}
 
           </ul>
         </nav>

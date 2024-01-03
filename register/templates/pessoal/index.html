@@ -1,0 +1,142 @@
+{% extends 'app.html' %}
+{% load static %}
+{% block title %} Cadastro Pessoal {% endblock %}
+{% block content %}
+
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-2">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Cadastro Pessoal
+        </li>
+    </ol>
+</div>
+
+<div class="row items-push">
+    <div class="col-sm-4 col-xxl-4 mb-3">
+        <form method="GET" id="search-form">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-alt" name="search" value="{{ request.GET.search }}"
+                    placeholder="Nome, Razão Social, CPF...">
+                <span class="input-group-text border-0">
+                    <i class="fa fa-search" id="search-btn"></i>
+                </span>
+            </div>
+        </form>
+    </div>
+    
+    <div class="col-sm-5 col-xxl-5 mb-3 form-group">
+        {% if perms.register.add_cadastro_pessoal %}
+            <a href="{% url 'cadpessoal.new' %}"><button type="button" class="btn btn-alt-success shadow-none fw-semibold">Novo Cadastro</button></a>
+        {% endif %}
+    </div>
+    
+    <div class="col-sm-3 col-xxl-3 mb-3">
+        <div class="text-end mt-2 fs-xs fw-semibold">
+            <span>{{ str_registros }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="tabela">
+    <table>
+        <thead>
+            <th style="width: 30%;">Razão Social</th>
+            <th style="width: 10%;">Nat. Jurídica</th>
+            <th style="width: 10%;">CPF/CNPJ</th>
+            <th style="width: 30%;">Município</th>
+            <th style="width: 10%;">Categoria</th>
+            <th style="width: 20%;">Ação</th>
+        </thead>
+
+        <tbody>
+            {% for cadastro in cadastros %}
+            <tr data-href="">
+                <td>{{ cadastro.razao_social }}</td>
+                <td>{{ cadastro.natureza_juridica }}</td>
+                <td>{{ cadastro.cpf_cnpj }}</td>
+                <td>{{ cadastro.municipio }}</td>
+                <td><span class="text-success py-1 px-3 fw-bold">{{ cadastro.categoria }}</span></td>
+                <td>     
+                {% if perms.register.delete_cadastro_pessoal %}
+                    <a class="btn btn-sm fw-normal badge btn-danger shadow-none" href="{% url 'cadpessoal.edit' cadastro.uuid %}" style="font-size: 11px;"><i class="fa-solid fa-pen-to-square h me-2"></i></a>
+                {% endif %}    
+                {% if perms.register.delete_cadastro_pessoal %}
+                    <button class="btn btn-sm fw-normal badge btn-danger shadow-none" id="delete-button" data-info="{{ cadastro.fantasia }}" data-url="{% url 'cadpessoal.delete' cadastro.uuid %}" style="font-size: 11px;"><i class="fa-solid fa-trash me-2"></i></button>
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if 'app_messages' in message.tags %}
+<div id="django-{{ message.level_tag }}-message" style="display: none;">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<script>
+    var searchBtn = $('#search-btn');
+    var searchForm = $('#search-form');
+    $(searchBtn).on('click', function () {
+        searchForm.submit();
+    })
+
+    $(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            var url = $(this).data("href");
+            window.open(url, '_self');
+        })
+
+
+        document.getElementById('delete-button').addEventListener('click', function(event) {
+            event.preventDefault();
+            const deleteUrl = event.currentTarget.getAttribute('data-url');
+            var info = event.currentTarget.getAttribute('data-info')
+    
+            Swal.fire({
+            title: 'Você tem certeza?',
+            html: `<div style="font-size: 13px;">O cadastro de <strong>${info}</strong> será permanentemente excluído!</div>`,
+            icon: 'warning',
+            showCancelButton: true,
+            allowOutsideClick: false,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33', 
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, Excluir!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                location.href = deleteUrl
+                }
+            });
+        });
+
+        var successMessageElement = document.getElementById('django-success-message')
+        var errorMessageElement = document.getElementById('django-error-message')
+
+        if (successMessageElement) {
+            var msg = successMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'success',
+                icon: 'fa fa-check me-1',
+                message: msg
+            })
+        }
+
+        if (errorMessageElement) {
+            var msg = errorMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'danger',
+                icon: 'fa fa-times me-1',
+                message: msg
+            })
+        }
+    })
+
+</script>
+
+{% endblock %}

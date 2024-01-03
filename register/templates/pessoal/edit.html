@@ -1,0 +1,182 @@
+{% extends 'app.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Editar Cadastro Pessoal {% endblock %}
+{% block content %}
+
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'cadpessoal.index' %}">Cadastro Pessoal</a>
+        </li>
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'cadpessoal.edit' uuid %}">{{ fantasia }}</a>
+        </li>
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Editar
+        </li>
+    </ol>
+</div>
+
+<form method="POST" autocomplete="on" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.categoria|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.natureza_juridica|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.razao_social|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.nome_fantasia|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.cpf_cnpj|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.numero_rg|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.endereco|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.municipio|as_crispy_field }}
+            </div>
+        </div>       
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.cep_endereco|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.contato_01|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.contato_02|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-3 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{ form.email_01|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-3 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{ form.email_02|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.data_nascimento|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.profissao|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.avatar|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-6 col-xxl-1 mb-0">
+            <div class="form-group">
+                <label class="form-label">Avatar Atual</label>
+                <div class="mb-0">
+                    <img class="img-avatar" style="width: 35px; height: 35px;"
+                        src="{{ MEDIA_URL }}{{ avatar }}" alt="Avatar {{ fantasia }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-6 col-xxl-8 mb-0">
+            <div class="form-group">
+                {{ form.description|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-1">
+            <div class="form-group">
+                <button type="submit" class="btn fw-normal btn-success shadow-none">Atualizar Registro</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% if messages %}
+{% for message in messages %}
+{% if 'app_messages' in message.tags %}
+<div id="django-{{ message.level_tag }}-message" style="display: none;">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<script>
+
+$(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            var url = $(this).data("href");
+            window.open(url, '_self');
+        })
+
+        var successMessageElement = document.getElementById('django-success-message')
+        var errorMessageElement = document.getElementById('django-error-message')
+
+        if (successMessageElement) {
+            var msg = successMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'success',
+                icon: 'fa fa-check me-1',
+                message: msg
+            })
+        }
+
+        if (errorMessageElement) {
+            var msg = errorMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'danger',
+                icon: 'fa fa-times me-1',
+                message: msg
+            })
+        }
+    })
+
+</script>
+
+
+{% endblock %}
+

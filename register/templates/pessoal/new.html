@@ -1,0 +1,129 @@
+{% extends 'app.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Novo Cadastro Pessoal {% endblock %}
+{% block content %}
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'cadpessoal.index' %}">Cadastro Pessoal</a>
+        </li>
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Novo Cadastro
+        </li>
+    </ol>
+</div>
+
+<form method="POST" autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.categoria|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.natureza_juridica|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.razao_social|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.nome_fantasia|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.cpf_cnpj|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.numero_rg|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.endereco|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.municipio|as_crispy_field }}
+            </div>
+        </div>       
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.cep_endereco|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.contato_01|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.contato_02|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-3 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{ form.email_01|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-3 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{ form.email_02|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.data_nascimento|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{ form.profissao|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.avatar|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-6 col-xxl-8 mb-0">
+            <div class="form-group">
+                {{ form.description|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-1">
+            <div class="form-group">
+                <button type="submit" class="btn fw-normal btn-success shadow-none">Cadastrar Pessoa</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
