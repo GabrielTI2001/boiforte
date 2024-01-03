@@ -1,0 +1,79 @@
+{% load i18n %}
+{% load account %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static '/media/favicons/logo-boi-forte.png' %}">
+  <title>Boi Forte | Email Verification Sent</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="{% static '/js/plugins/sweetalert2/sweetalert2.min.css' %}">
+  <link rel="stylesheet" id="css-main" href="{% static '/css/oneui.min.css' %}">
+  <link rel="stylesheet" id="css-app" href="{% static '/css/app.css' %}">
+  {% block css-header %}{% endblock %}
+  <script src="{% static '/js/lib/jquery.min.js' %}"></script>
+  {% block js-header %}{% endblock %}
+</head>
+
+<style>
+
+.content{
+    padding-top: 40px;
+}
+
+</style>
+
+<body>
+    <div id="page-container" class="side-scroll page-header-fixed">
+
+        <header id="page-header" class="content-header page-header-fixed p-4" style="background-color: rgba(185, 198, 202, 1);">
+            <div class="d-flex align-items-center">
+                <a class="fw-semibold fs-5 tracking-wider text-dual me-3" href="{% url 'home' %}">
+                <img src="{% static 'media/various/logo-boi-forte.png' %}" alt="logo" style="width: 120px;">
+                </a>
+            </div>
+        </header>
+
+        <div class="content" style="margin: 0px;">
+
+            {% block content %}
+            <h6 class="fw-bold">{% trans "Confirm E-mail Address" %}</h6>
+
+            {% if confirmation %}
+
+            {% user_display confirmation.email_address.user as user_display %}
+
+            <p class="fw-semibold fs-xs mb-4">{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
+
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-alt-success btn-sm shadow-none fs-xs">{% trans 'Confirm' %}</button>
+            </form>
+
+            {% else %}
+
+            {% url 'account_email' as email_url %}
+
+            <p class="fw-semibold fs-xs mb-2 text-danger">{% blocktrans %}Este link para confirmação do e-mail expirou ou é inválido!{% endblocktrans %}</p>
+            <p class="fw-semibold fs-xs mb-1">Contact Email: <span
+                    class="text-primary">suporte@frassonconsultoria.com.br</span></p>
+
+            {% endif %}
+
+            {% endblock %}
+        </div>
+
+    </div>
+
+  <script src="{% static '/js/oneui.app.min.js' %}"></script>
+
+</body>
+
+</html>

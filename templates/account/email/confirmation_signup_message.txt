@@ -1,0 +1,9 @@
+Olá do site {{ user.first_name }}!
+
+Você está recebendo este email porque o usuário {{ user.username }} forneceu seu endereço de email para se registrar na plataforma Agropar.
+
+Para confirmar que isso está correto, acesse o seguinte link:
+{{ activate_url }}
+
+Obrigado por usar a plataforma Agropar!
+

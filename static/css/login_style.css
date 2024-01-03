@@ -1,0 +1,52 @@
+body {
+    font-family: "Roboto", sans-serif;
+  }
+    
+  h3 {
+    color: rgb(12, 26, 53);
+    font-weight: 600;
+  }
+  
+  p {
+    color: #686565;
+    font-weight: 300;
+  }
+  
+  .footer-span {
+    color: rgb(103, 111, 125);
+    font-size: 13px;
+  }
+  
+  .form-group button {
+    font-size: 14px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid rgb(12, 26, 53);
+    border-radius: 5px;
+    background-color: rgb(12, 26, 53);
+    outline: 0;
+    box-shadow: 0 0 3px rgb(12, 26, 53);
+  }
+  
+  .form-group button:hover {
+    background-color: rgb(42, 168, 197);
+    color: rgb(255, 255, 255);
+  }
+  
+  label{
+    font-weight: 600;
+    color: rgb(12, 26, 53);
+    font-size: 14px;
+  }
+  
+  input.form-control{
+    font-size: 14px;
+    color: rgb(12, 26, 53);
+    background-color: rgba(39, 67, 27, 0.1) !important;
+  }
+  
+  .errorlist {
+    font-size: 11px;
+    font-weight: 700;
+    color: red;
+  }
