@@ -37,7 +37,7 @@
                 <span class="nav-main-link-name">Cadastro</span>
               </a>
               <ul class="nav-main-submenu">
-                {% if perms %}
+                {% if perms.register.view_cadastro_pessoal %}
                 <li class="nav-main-item">
                   <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                     aria-expanded="false" href="#">
@@ -51,7 +51,7 @@
                         <span class="nav-main-link-name">Registros</span>
                       </a>
                     </li>
-                    {% if perms %}
+                    {% if perms.register.add_cadastro_pessoal %}
                     <li class="nav-main-item">
                       <a class="nav-main-link" href="">
                         <i class="nav-main-link-icon fa-solid fa-plus"></i>
