@@ -7,4 +7,4 @@ staticfiles/
 db.sqlite3
 db.sqlite3-journal
 env/
-boiforte/.env
+./boiforte/.env
