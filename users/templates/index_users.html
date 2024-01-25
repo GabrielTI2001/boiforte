@@ -1,0 +1,125 @@
+{% extends 'app.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Users {% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Usuários do Sistema
+        </li>
+    </ol>
+</div>
+
+<div class="row items-push">
+    <div class="col-sm-4 col-xxl-4 mb-3">
+        <form method="GET" id="search-form">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-alt" name="search" value="{{ request.GET.search }}"
+                    placeholder="Nome, Sobrenome, E-mail ou Usuário...">
+                <span class="input-group-text border-0">
+                    <i class="fa fa-search" id="search-btn"></i>
+                </span>
+            </div>
+        </form>
+    </div>
+    
+    <div class="col-sm-5 col-xxl-5 mb-3 form-group">
+        {% if perms.register.add_cadastro_pessoal %}
+            <a href="{% url 'user.new' %}"><button type="button" class="btn btn-secondary shadow-none fw-semibold">Novo Usuário</button></a>
+        {% endif %}
+    </div>
+    
+    <div class="col-sm-3 col-xxl-3 mb-3">
+        <div class="text-end mt-2 fs-xs fw-semibold">
+            <span>{{ str_usuarios }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="tabela">
+    <table class="">
+        <thead>
+            <th class="text-center" style="width: 5%;">
+                <i class="far fa-user"></i>
+            </th>
+            <th style="width: 25%;">Nome</th>
+            <th style="width: 15%;">Usuário</th>
+            <th style="width: 25%;">Email</th>
+            <th style="width: 15%;">Status</th>
+            <th style="width: 15%;">Último Login</th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr data-href="{% url 'user.view' user.id %}" style="cursor: pointer;">
+                <td class="text-center py-1">
+                    <img class="img-avatar" src="{{ MEDIA_URL }}{{user.avatar}}" alt="User Avatar"
+                        style="width: 30px; height: 30px;">
+                </td>
+                <td class=" fs-xs text-dark">
+                    {{ user.first_name }} {{ user.last_name }}
+                </td>
+                <td class="fs-xs text-dark">{{ user.username }}</td>
+                <td class="fs-xs">{{ user.email }}</td>
+                <td>
+                    <span
+                        class="fs-xs fw-normal d-inline-block py-1 px-3 badge bg-{{ user.is_active_color }}-light text-{{ user.is_active_color }}">{{ user.is_active }}</span>
+                </td>
+                <td class="fs-xs">
+                    {{ user.last_login }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if 'app_messages' in message.tags %}
+            <div id="django-{{ message.level_tag }}-message" style="display: none;">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<script>
+    var searchBtn = $('#search-btn');
+    var searchForm = $('#search-form');
+    $(searchBtn).on('click', function () {
+        searchForm.submit();
+    })
+
+    $(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            var url = $(this).data("href");
+            window.open(url, '_self');
+        })
+
+        var successMessageElement = document.getElementById('django-success-message')
+        var errorMessageElement = document.getElementById('django-error-message')
+
+        if (successMessageElement) {
+            var msg = successMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'success',
+                icon: 'fa fa-check me-1',
+                message: msg
+            })
+        }
+
+        if (errorMessageElement) {
+            var msg = errorMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'danger',
+                icon: 'fa fa-times me-1',
+                message: msg
+            })
+        }
+    })
+
+</script>
+
+
+{% endblock %}

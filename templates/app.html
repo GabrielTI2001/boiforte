@@ -63,23 +63,29 @@
                 </li>
                 {% endif %}
 
-                <li class="nav-main-item">
-                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                    aria-expanded="false" href="#">
-                    <i class="nav-main-link-icon"></i>
-                    <span class="nav-main-link-name">Cadastro 2</span>
-                  </a>
-                  <ul class="nav-main-submenu">
-                    {% if perms %}
-                    <li class="nav-main-item">
-                      <a class="nav-main-link" href="">
-                        <i class="nav-main-link-icon"></i>
-                        <span class="nav-main-link-name">Teste</span>
-                      </a>
-                    </li>
-                    {% endif %}
-                  </ul>
-                </li>
+                {% if perms.users.gerenciar_usuarios %}
+                  <li class="nav-main-item">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                      aria-expanded="false" href="#">
+                      <i class="nav-main-link-icon fa-solid fa-user"></i>
+                      <span class="nav-main-link-name">Cadastro Usuários</span>
+                    </a>
+                    <ul class="nav-main-submenu">
+                      <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'users.index' %}">
+                          <i class="nav-main-link-icon fa-solid fa-user-group"></i>
+                          <span class="nav-main-link-name">Usuários</span>
+                        </a>
+                      </li>
+                      <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'user.new' %}">
+                          <i class="nav-main-link-icon fa-solid fa-user-plus"></i>
+                          <span class="nav-main-link-name">Novo Usuário</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                {% endif %}
                 {% if perms%}
                 <li class="nav-main-item">
                   <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"

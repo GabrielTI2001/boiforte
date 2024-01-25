@@ -1,0 +1,95 @@
+{% extends 'app.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Users {% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'users.index' %}">Usuários do Sistema</a>
+        </li>
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'user.new' %}">Novo Usuário</a>
+        </li>
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Autorizar E-mail
+        </li>
+    </ol>
+</div>
+
+<div class="row items-push">
+    
+</div>
+
+<div class="fs-xs fw-bold mb-2">E-mails autorizados a criar uma conta nesta plataforma:</div>
+
+{%for email in emails%}
+<div class="fs-xs fw-normal mb-1 text-primary">{{ email.email }}</div>
+{%endfor%}
+
+<hr>
+
+<div class="col-sm-5 col-xxl-5 mb-3 form-group">
+
+    {% if perms.users.gerenciar_usuarios %}
+    <form method="post">
+        {%csrf_token%}
+        <div class="form-group">
+            {{ form.email|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn fw-normal btn-success shadow-none">Autorizar E-mail</button>
+        </div>
+    </form>
+    {% endif %}
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if 'app_messages' in message.tags %}
+            <div id="django-{{ message.level_tag }}-message" style="display: none;">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<script>
+    var searchBtn = $('#search-btn');
+    var searchForm = $('#search-form');
+    $(searchBtn).on('click', function () {
+        searchForm.submit();
+    })
+
+    $(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            var url = $(this).data("href");
+            window.open(url, '_self');
+        })
+
+        var successMessageElement = document.getElementById('django-success-message')
+        var errorMessageElement = document.getElementById('django-error-message')
+
+        if (successMessageElement) {
+            var msg = successMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'success',
+                icon: 'fa fa-check me-1',
+                message: msg
+            })
+        }
+
+        if (errorMessageElement) {
+            var msg = errorMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'danger',
+                icon: 'fa fa-times me-1',
+                message: msg
+            })
+        }
+    })
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'app.html' %}
+{% block title %} New User {% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+
+    #id_password1_helptext{
+        font-size: 11px;
+        font-weight: 500;
+        color: rgb(12, 23, 56)
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0px;
+    }
+
+    .form-text{
+    font-style: italic;
+    }
+
+</style>
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'users.index' %}">Usuários do Sistema</a>
+        </li>
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Novo Usuário
+        </li>
+    </ol>
+</div>
+
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.first_name|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.last_name|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.username|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.email|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{ form.password1|as_crispy_field }}
+            </div>
+        </div>     
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-3">
+            <div class="form-group">
+                {{ form.password2|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-4 col-xxl-4 mb-1">
+            <div class="form-group">
+                <button type="submit" class="btn fw-normal btn-success shadow-none">Cadastrar Usuário</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<div class="row items-push">
+    <div class="col-sm-4 col-xxl-4 mb-1">
+        <a href="{%url 'users.emails'%}" class="form-group">
+            <button type="submit" class="btn fw-normal btn-alt-info shadow-none">Autorizar novo E-mail</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

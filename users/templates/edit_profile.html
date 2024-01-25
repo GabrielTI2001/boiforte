@@ -1,0 +1,138 @@
+{% extends 'app.html' %}
+{% block title %} Edit User {% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-0">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'users.index' %}">Usuários do Sistema</a>
+        </li>
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'user.view' user.id %}">{{ first_name }} {{ last_name }}</a>
+        </li>
+        <li class="breadcrumb-item" aria-current="page">
+            Editar Perfil
+        </li>
+    </ol>
+</div>
+
+<div class="d-flex py-2">
+    <div class="flex-shrink-0 me-3 ms-0 overlay-container overlay-bottom">
+        <img class="img-avatar img-avatar-thumb" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" alt="Avatar User" style="width: 70px; height: 70px;">
+
+    </div>
+    <div class="flex-grow-1 mt-3">
+        <div class="fw-bold text-dark">{{ first_name }} {{ last_name }}</div>
+        <div class="fs-xs fw-semibold text-muted">{{ user_job }}</div>
+    </div>
+</div>
+
+<hr>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row items-push">
+        <div class="col-sm-6 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{formusuario.first_name|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-sm-6 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{formusuario.last_name|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-sm-6 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{formusuario.username|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-sm-6 col-xxl-3 mb-0">
+            <div class="form-group">
+                {{formprofile.job_function|as_crispy_field}}
+            </div>
+        </div>
+    </div>
+    <div class="row items-push">
+        <div class="col-sm-6 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{formprofile.cpf|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-sm-6 col-xxl-2 mb-0">
+            <div class="form-group">
+                {{formprofile.birthday|as_crispy_field}}
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xxl-1 mb-0">
+            <div class="form-group">
+                <label class="form-label">Seu Avatar</label>
+                <div class="mb-0">
+                    <img class="img-avatar" style="width: 35px; height: 35px;"
+                        src="{{ MEDIA_URL }}{{ user.profile.avatar }}" alt="Avatar {{ usuario.nome }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xxl-4 mb-0">
+            <div class="form-group">
+                {{formprofile.avatar|as_crispy_field}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row items-push">
+        <div class="col-sm-6 col-xxl-6 mb-0">
+            <div class="form-group">
+                {{formprofile.bio|as_crispy_field}}
+            </div>
+        </div>
+    </div>
+
+    <button name="bt-form-profile" type="submit" class="mt-2 btn btn-sm fs-xs btn-alt-success shadow-none">Atualizar
+        Informações</button>
+
+</form>
+
+<hr>
+
+<a href="{% url 'account_change_password' %}"><button class="btn btn-sm fs-xs btn-alt-primary shadow-none"></i>Redefinir Senha</button></a>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if 'app_messages' in message.tags %}
+            <div id="django-{{ message.level_tag }}-message" style="display: none;">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<script>
+
+    $(document).ready(function () {
+        var successMessageElement = document.getElementById('django-success-message')
+        var errorMessageElement = document.getElementById('django-error-message')
+
+        if (successMessageElement) {
+            var msg = successMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'success',
+                icon: 'fa fa-check me-1',
+                message: msg
+            })
+        }
+
+        if (errorMessageElement) {
+            var msg = errorMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'danger',
+                icon: 'fa fa-times me-1',
+                message: msg
+            })
+        }
+    })
+
+</script>
+
+{% endblock %}
