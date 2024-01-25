@@ -59,10 +59,16 @@
                 <td><span class="text-success py-1 px-3 fw-bold">{{ cadastro.categoria }}</span></td>
                 <td>     
                 {% if perms.register.delete_cadastro_pessoal %}
-                    <a class="btn btn-sm fw-normal badge btn-danger shadow-none" href="{% url 'cadpessoal.edit' cadastro.uuid %}" style="font-size: 11px;"><i class="fa-solid fa-pen-to-square h me-2"></i></a>
+                    <a class="btn btn-sm fw-normal badge btn-danger shadow-none" 
+                    href="{% url 'cadpessoal.edit' cadastro.uuid %}" style="font-size: 11px;">
+                        <i class="fa-solid fa-pen-to-square h"></i>
+                    </a>
                 {% endif %}    
                 {% if perms.register.delete_cadastro_pessoal %}
-                    <button class="btn btn-sm fw-normal badge btn-danger shadow-none" id="delete-button" data-info="{{ cadastro.fantasia }}" data-url="{% url 'cadpessoal.delete' cadastro.uuid %}" style="font-size: 11px;"><i class="fa-solid fa-trash me-2"></i></button>
+                    <button class="btn btn-sm fw-normal badge btn-danger shadow-none" id="delete-button" 
+                    data-info="{{ cadastro.fantasia }}" data-url="{% url 'cadpessoal.delete' cadastro.uuid %}" style="font-size: 11px;">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
                 {% endif %}
                 </td>
             </tr>

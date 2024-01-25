@@ -1,0 +1,38 @@
+{% extends 'app.html' %}
+{% load static %}
+{% block title %} Permission Denied {% endblock %}
+{% block content %}
+
+<style>
+
+#main-container{
+    background-color: rgb(255, 255, 255);
+}
+
+</style>
+<!-- Page Content -->
+<div class="content">
+    <div class="hero-inner text-center">
+        <div class="bg-body-extra-light">
+            <div class="content content-full overflow-hidden bg-body">
+                <div class="py-4">
+                    <h1 class="display-4 fw-bolder text-flat">
+                        Opa!
+                    </h1>
+                    <h2 class="h5 fw-semibold text-dark mb-5">
+                        Você não possui permissão para acessar esta página...
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="content content-full text-muted fs-sm fw-medium">
+            <p class="mb-1">
+                Contate o time de desenvolvimento para mais informações
+            </p>
+            <a class="link-fx"href="{% url 'home' %}">Voltar para Home Page</a>
+        </div>
+    </div>
+</div>
+<!-- END Page Content -->
+
+{% endblock %}
