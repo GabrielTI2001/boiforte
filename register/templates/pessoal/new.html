@@ -123,7 +123,38 @@
         </div>
     </div>
 </form>
+{% if messages %}
+{% for message in messages %}
+{% if 'app_messages' in message.tags %}
+<div id="django-{{ message.level_tag }}-message" style="display: none;">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<script>
+    $(document).ready(function () {
+        var successMessageElement = document.getElementById('django-success-message')
+        var errorMessageElement = document.getElementById('django-error-message')
 
+        if (successMessageElement) {
+            var msg = successMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'success',
+                icon: 'fa fa-check me-1',
+                message: msg
+            })
+        }
+
+        if (errorMessageElement) {
+            var msg = errorMessageElement.innerText;
+            One.helpers('jq-notify', {
+                type: 'danger',
+                icon: 'fa fa-times me-1',
+                message: msg
+            })
+        }
+
+    })
+</script>
 
 {% endblock %}
 

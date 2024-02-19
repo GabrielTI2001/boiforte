@@ -1,0 +1,33 @@
+{% extends 'app.html' %}
+{% load static %}
+{% block title %} Ranking Vendas {% endblock %}
+{% block content %}
+
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-2">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Ranking Vendas
+        </li>
+    </ol>
+</div>
+
+<div class="tabela">
+    <table>
+        <thead>
+            <th style="width: 30%;">Cliente</th>
+            <th style="width: 20%;">Valor</th>
+        </thead>
+
+        <tbody>
+            {% for dado in dados %}
+            <tr data-href="">
+                <td>{{ dado.cliente }}</td>
+                <td>{{ dado.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
