@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'sales',
     'dashboards',
     'users',
+    'siagri',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,6 +92,14 @@ DATABASES = {
 }
 
 
+#CREDENCIAIS BANCO DE DADOS ORACLE BOI FORTE
+BOIFORTE_DB_USER = env('BOIFORTE_DB_USER')
+BOIFORTE_DB_PASS = env('BOIFORTE_DB_PASS')
+BOIFORTE_DB_HOST = env('BOIFORTE_DB_HOST')
+BOIFORTE_DB_PORT = env('BOIFORTE_DB_PORT')
+BOIFORTE_DB_SID = env('BOIFORTE_DB_SID')
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -129,6 +139,10 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_PREVENT_ENUMERATION = False 
 
+
+SESSION_EXPIRE_SECONDS = 10800  # Expire after 3 hours of inactivity
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
 ACCOUNT_FORMS = {
   'login': 'boiforte.forms.CustomLoginForm',
   'signup': 'boiforte.forms.CustomSignupForm',
@@ -139,11 +153,12 @@ ACCOUNT_FORMS = {
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'

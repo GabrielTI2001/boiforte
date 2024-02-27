@@ -5,6 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from .models import Venda
 from .forms import *
+import locale
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 @login_required
 @permission_required('sales.view_venda', raise_exception=True)
@@ -20,11 +22,20 @@ def index_vendas(request):
         qtd_cadastros = cadastros.count()
         str_registros = f"{qtd_cadastros} {'registros mais recentes' if qtd_cadastros > 1 else 'registro mais recente'}"
 
+    vendas = [{
+        'id': venda.id,
+        'uuid':venda.uuid,
+        'cliente': venda.cliente.razao_social,
+        'fornecedor': venda.fornecedor.razao_social,
+        'valor': locale.format_string('%.2f', venda.valor, True)
+    } for venda in cadastros]
+
     contexto = {
-        'cadastros': cadastros,
+        'vendas': vendas,
         'str_registros': str_registros
     }
     return render(request, 'index.html', contexto)
+
 
 @login_required
 @permission_required('sales.add_venda', raise_exception=True)
@@ -35,9 +46,10 @@ def vendas_new(request):
         if form.is_valid():
             form.save()
             form = VendaForm()
-            messages.success(request, 'Cadastro efetuado com sucesso!', extra_tags='app_messages') 
+            messages.success(request, 'Venda cadastrada com sucesso!', extra_tags='app_messages') 
     form = VendaForm()
     return render(request, 'new.html', {'form':form})
+
 
 @login_required
 @permission_required('sales.change_venda', raise_exception=True)
@@ -48,8 +60,9 @@ def vendas_edit(request, uuid):
         form = VendaForm(request.POST, instance=venda)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Cadastro atualizado com sucesso!', extra_tags='app_messages') 
+            messages.success(request, 'Venda atualizada com sucesso!', extra_tags='app_messages') 
     return render(request, 'edit.html', {'form':form})
+
 
 @login_required
 @permission_required('sales.delete_venda', raise_exception=True)
@@ -57,7 +70,7 @@ def vendas_delete(request, id):
     try:
         cadastro = Venda.objects.get(id=id)
         cadastro.delete()
-        messages.success(request, 'Cadastro excluído com sucesso!', extra_tags='app_messages')
+        messages.success(request, 'Venda excluída com sucesso!', extra_tags='app_messages')
         return redirect('vendas.index')
     except ObjectDoesNotExist:
         return render(request, 'errors/404.html')

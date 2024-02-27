@@ -3,6 +3,7 @@
 {% block title %} Ranking Vendas {% endblock %}
 {% block content %}
 
+<meta http-equiv="refresh" content="30">
 
 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-2">
     <ol class="breadcrumb breadcrumb-alt">
@@ -12,22 +13,55 @@
     </ol>
 </div>
 
-<div class="tabela">
-    <table>
-        <thead>
-            <th style="width: 30%;">Cliente</th>
-            <th style="width: 20%;">Valor</th>
-        </thead>
+<div class="row items-push">
 
-        <tbody>
-            {% for dado in dados %}
-            <tr data-href="">
-                <td>{{ dado.cliente }}</td>
-                <td>{{ dado.total }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="col-sm-4 col-xxl-6 mb-1">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Vendas Clientes</h3>
+        </div>
+        <table class="table table-striped table-vcenter table-hover">
+            <tbody>
+                {% for venda in venda_clientes %}
+                <tr>
+                    <td class="text-center fs-6 fw-bold" scope="row" style="width: 50px;">{{ venda.posicao }}</td>
+                    <td class="text-center" style="width: 40px;">
+                        <img class="rounded-circle" src="{{ MEDIA_URL }}{{ venda.avatar }}" alt="Avatar"
+                            style="width: 45px">
+                    </td>
+                    <td>
+                        <span class="fw-semibold text-primary fs-sm">{{ venda.cliente }}</span>
+                        <div class="fs-sm text-secondary fw-bold">{{ venda.total }}</div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4 col-xxl-6 mb-1">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Vendas Fornecedores</h3>
+        </div>
+        <table class="table table-striped table-vcenter table-hover">
+            <tbody>
+                {% for venda in venda_fornecedores %}
+                <tr>
+                    <td class="text-center fs-6 fw-bold" scope="row" style="width: 50px;">{{ venda.posicao }}</td>
+                    <td class="text-center" style="width: 40px;">
+                        <img class="rounded-circle" src="{{ MEDIA_URL }}{{ venda.avatar }}" alt="Avatar"
+                            style="width: 45px">
+                    </td>
+                    <td>
+                        <span class="fw-semibold text-primary fs-sm">{{ venda.fornecedor }}</span>
+                        <div class="fs-sm text-secondary fw-bold">{{ venda.total }}</div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
+
+
 
 {% endblock %}

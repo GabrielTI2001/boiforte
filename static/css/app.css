@@ -57,7 +57,7 @@ p {
 }
 
 th {
-    background-color: rgb(6, 102, 46) !important;
+    background-color: rgba(1, 115, 53, .7) !important;
     color: rgb(255, 255, 255) !important;
     font-size: 12px !important;
 }
@@ -106,7 +106,7 @@ table th {
 }
 
 .tooltip {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .swal2-title {

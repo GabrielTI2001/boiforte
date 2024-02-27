@@ -7,40 +7,40 @@
 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
     <ol class="breadcrumb breadcrumb-alt">
         <li class="breadcrumb-item fw-bold">
-            <a class="link-fx text-success" href="{% url 'vendas.index' %}">Vendas</a>
+            <a class="link-fx text-success" href="{% url 'vendas.index' %}">Cadastro Vendas</a>
         </li>
         <li class="breadcrumb-item fw-bold" aria-current="page">
-            Editar Cadastro
+            Editar Venda
         </li>
     </ol>
 </div>
 
 <form method="POST" autocomplete="off">
     {% csrf_token %}
-    <div class="row items-push">
-        <div class="col-sm-4 col-xxl-4 mb-0">
-            <div class="form-group">
-                {{ form.cliente|as_crispy_field }}
-            </div>
-        </div>
-        <div class="col-sm-4 col-xxl-4 mb-0">
-            <div class="form-group">
-                {{ form.fornecedor|as_crispy_field }}
-            </div>
-        </div>
-        <div class="col-sm-2 col-xxl-2 mb-0">
-            <div class="form-group">
-                {{ form.valor|as_crispy_field }}
-            </div>
+
+    <div class="col-sm-4 col-xxl-4 mb-0">
+        <div class="form-group">
+            {{ form.cliente|as_crispy_field }}
         </div>
     </div>
-    <div class="row items-push">
-        <div class="col-sm-4 col-xxl-4 mb-1">
-            <div class="form-group">
-                <button type="submit" class="btn fw-normal btn-success shadow-none">Cadastrar Venda</button>
-            </div>
+    <div class="col-sm-4 col-xxl-4 mb-0">
+        <div class="form-group">
+            {{ form.fornecedor|as_crispy_field }}
         </div>
     </div>
+    <div class="col-sm-2 col-xxl-2 mb-0">
+        <div class="form-group">
+            {{ form.valor|as_crispy_field }}
+        </div>
+    </div>
+
+
+    <div class="col-sm-4 col-xxl-4 mb-1">
+        <div class="form-group">
+            <button type="submit" class="btn fw-normal btn-success shadow-none">Atualizar Venda</button>
+        </div>
+    </div>
+
 </form>
 
 {% if messages %}

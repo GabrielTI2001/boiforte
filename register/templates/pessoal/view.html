@@ -1,0 +1,138 @@
+{% extends 'app.html' %}
+{% load static %}
+{% block title %} {{ cadastro.nome_fantasia }} {% endblock %}
+{% block content %}
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-1">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold">
+            <a class="link-fx text-success" href="{% url 'cadpessoal.index' %}">Cadastro Pessoal</a>
+        </li>
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            {{ cadastro.nome_fantasia }}
+        </li>
+    </ol>
+</div>
+
+<div class="row items-push">
+    <div class="col-sm-12 col-xxl-12 mb-0">
+
+        <div class="d-flex py-1 mb-3">
+            <a class="flex-shrink-0 me-3 ms-0 pt-2 overlay-container overlay-bottom">
+                <img class="img-avatar img-avatar-thumb" src="{{ MEDIA_URL }}{{ cadastro.avatar }}" alt="Avatar User">
+            </a>
+            <div class="flex-grow-1 mt-3" style="color: rgb(12, 26, 53);">
+                <div class="fw-bold fs-xs mb-1">{{ cadastro.razao_social }}</div> 
+                {% if cadastro.cpf_cnpj %}
+                <div class="fw-bold fs-xs mb-1">{{ cadastro.cpf_cnpj }}</div>
+                {% endif %}
+                <div class="fw-normal badge bg-success mb-1" style="font-size: 11px;">{{ cadastro.categoria }}</div>
+            </div>
+        </div>
+        
+        <address class="fs-xs fw-semibold text-dark" style="color: rgb(12, 26, 53);">
+            
+            {% if cadastro.numero_rg %}
+            <div class="mb-1"><i class="fa-solid fa-user-pen me-1"></i> {{ cadastro.numero_rg }}<br></div>
+            {% endif %}
+            
+            {% if cadastro.endereco %}
+            <div class="mb-1"><i class="fa-solid fa-location-dot me-1"></i> {{ cadastro.endereco }}<br></div>
+            {% endif %}
+
+            {% if cadastro.municipio %}
+            <div class="mb-1"><i class="fa-solid fa-location-arrow me-1"></i> {{ cadastro.municipio }}<br></div>
+            {% endif %}
+
+            {% if cadastro.cep %}
+            <div class="mb-1"><i class="fa-solid fa-map-pin me-1"></i> {{ cadastro.cep }}<br></div>
+            {% endif %}
+
+            {% if cadastro.contato01 %}
+            <div class="mb-1"><i class="fa-solid fa-phone me-1"></i> {{ cadastro.contato01 }}<br></div>
+            {% endif %}
+
+            {% if cadastro.contato02 %}
+            <div class="mb-1"><i class="fa-solid fa-phone me-1"></i> {{ cadastro.contato02 }}<br></div>
+            {% endif %}
+
+            {% if cadastro.email01 %}
+            <div class="mb-1"><i class="fa-solid fa-envelope me-1"></i> <span class="text-primary">{{ cadastro.email01 }}</span></div>
+            {% endif %}
+
+            {% if cadastro.email02 %}
+            <div class="mb-1"><i class="fa-solid fa-envelope me-1"></i> <span class="text-primary">{{ cadastro.email02 }}</span></div>
+            {% endif %}
+        </address>
+
+        <div style="color: rgb(12, 26, 53);" class="mb-2">
+            {% if cadastro.data_nascimento %}
+            <div class="mb-1 fs-xs fw-semibold"><i class="fa-solid fa-cake-candles me-1"></i> {{ cadastro.data_nascimento }} ({{ cadastro.idade }} anos)<br></div>
+            {% endif %}
+
+            {% if cadastro.profissao %}
+            <div class="mb-1 fs-xs fw-semibold"><i class="fa-solid fa-briefcase me-1"></i> {{ cadastro.profissao }}<br></div>
+            {% endif %}
+
+            {% if cadastro.description %}
+            <div class="mb-1"><i class="fa-solid fa-quote-left me-1"></i><span style="font-size: 12px;">{{ cadastro.description }}</span><br></div>
+            {% endif %}
+            
+        </div>
+
+        <div>
+            {% if perms.register.change_cadastro_pessoal %}
+            <a href="{% url 'cadpessoal.edit' cadastro.uuid %}"><button class="btn btn-sm fw-normal badge btn-primary shadow-none" style="font-size: 11px;"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</button></a>
+            {% endif %}
+
+            {% if perms.register.delete_cadastro_pessoal %}
+            <a class="btn btn-sm fw-normal badge btn-danger shadow-none" id="delete-button" data-info="{{ cadastro.razao_social }}" data-url="{% url 'cadpessoal.delete' cadastro.uuid %}" style="font-size: 11px;"><i class="fa-solid fa-trash me-2"></i>Excluir</a>
+            {% endif %}
+        </div>
+        
+        <h6 class="fw-bold text-info mb-1 mt-4" style="font-size: 11px;">Informações Adicionais</h6>
+        <hr class="mb-1 mt-1">
+        <p class="fs-xs">Sem informações adicionais.</p>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+$(document).ready(function () {
+        $(document.body).on("click", "tr[data-href]", function () {
+            var url = $(this).data("href");
+            window.open(url, '_blank');
+        })
+    })
+
+
+    document.getElementById('delete-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        const deleteUrl = event.currentTarget.getAttribute('data-url');
+        var info = event.currentTarget.getAttribute('data-info')
+  
+        Swal.fire({
+        title: 'Você tem certeza?',
+        html: `<div style="font-size: 13px;">O cadastro de <strong>${info}</strong> será permanentemente excluído!</div>`,
+        icon: 'warning',
+        showCancelButton: true,
+        allowOutsideClick: false,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#d33', 
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sim, Excluir!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+            location.href = deleteUrl
+            }
+        });
+    });
+
+
+</script>
+
+{% endblock %}

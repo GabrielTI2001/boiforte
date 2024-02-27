@@ -28,6 +28,7 @@ def index_cadastro_pessoal(request):
         'uuid': cad.uuid,
         'categoria': cad.categoria,
         'razao_social': cad.razao_social,
+        'fantasia': cad.nome_fantasia,
         'cpf_cnpj': cad.cpf_cnpj,
         'endereco': cad.endereco or '-',
         'municipio': f"{cad.municipio.nome_municipio} - {cad.municipio.sigla_uf}",
@@ -40,6 +41,32 @@ def index_cadastro_pessoal(request):
     }
 
     return render(request, 'pessoal/index.html', context)
+
+
+
+@login_required
+@permission_required('register.view_cadastro_pessoal', raise_exception=True)
+def cadastro_pessoal_view(request, uuid):
+
+    try:
+        cadastro = Cadastro_Pessoal.objects.get(uuid=uuid)
+
+
+        context = {
+            'cadastro': cadastro
+        }
+        
+
+        return render(request, 'pessoal/view.html', context)  
+    
+    except ObjectDoesNotExist:
+        return render(request, 'errors/404.html')
+
+
+
+     
+         
+
 
 @login_required
 @permission_required('register.add_cadastro_pessoal', raise_exception=True)

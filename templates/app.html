@@ -22,7 +22,7 @@
 <body>
   <div id="page-container" class="side-scroll page-header-fixed">
 
-    <header id="page-header" class="content-header page-header-fixed p-4" style="background-color: rgba(185, 198, 202, 1);">
+    <header id="page-header" class="content-header page-header-fixed p-4" style="background-color: rgba(1, 115, 53, .3);">
       <div class="d-flex align-items-center">
         <a class="fw-semibold fs-5 tracking-wider text-dual me-3" href="{% url 'home' %}">
           <img src="{% static 'media/various/logo-boi-forte.png' %}" alt="logo boi forte" style="width: 80px;">
@@ -86,23 +86,7 @@
                     </ul>
                   </li>
                 {% endif %}
-                {% if perms%}
-                <li class="nav-main-item">
-                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                    aria-expanded="false" href="#">
-                    <i class="nav-main-link-icon"></i>
-                    <span class="nav-main-link-name">Cadastro 2</span>
-                  </a>
-                  <ul class="nav-main-submenu">
-                    <li class="nav-main-item">
-                      <a class="nav-main-link" href="">
-                        <i class="nav-main-link-icon"></i>
-                        <span class="nav-main-link-name">Teste</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                {% endif %}
+
               </ul>
             </li>
 
@@ -184,13 +168,13 @@
 
       <div class="d-flex align-items-center">
         <div class="dropdown d-inline-block ms-2">
-          <button type="button" class="btn btn-sm btn-alt-light d-flex align-items-center shadow-none text-dark" style="border-color: rgba(185, 198, 202, 1);"
+          <button type="button" class="btn btn-sm btn-alt-light d-flex align-items-center shadow-none text-dark" style="border-color: rgba(1, 115, 53, 0);"
             id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="rounded-circle" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" alt="User Avatar"
               style="width: 21px;">
             <span class="d-none d-sm-inline-block ms-2 fs-xs fw-semibold">
-              <!-- {%if first_name%}{{ first_name }}{%else%}{{ user.first_name }}{%endif%}
-              {%if last_name%}{{ last_name }}{%else%}{{ user.last_name }}{%endif%} -->
+              {%if first_name%}{{ first_name }}{%else%}{{ user.first_name }}{%endif%}
+              {%if last_name%}{{ last_name }}{%else%}{{ user.last_name }}{%endif%}
             </span>
             <i class="fa fs-xs fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
           </button>
@@ -199,8 +183,8 @@
             <div class="p-3 text-center bg-body-light border-bottom rounded-top">
               <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ MEDIA_URL }}{{ user.profile.avatar }}"
                 alt="User Avatar">
-              <!-- <p class="mt-2 mb-0 fs-sm fw-bold">{%if first_name%}{{ first_name }} {{ last_name }}{%else%}{{ user.first_name }} {{ user.last_name }}{%endif%}</p> -->
-              <!-- <p class="mb-0 text-muted fs-xs fw-medium">{% firstof user.profile.job_function user.email %}</p> -->
+              <p class="mt-2 mb-0 fs-sm fw-bold">{%if first_name%}{{ first_name }} {{ last_name }}{%else%}{{ user.first_name }} {{ user.last_name }}{%endif%}</p>
+              <p class="mb-0 text-muted fs-xs fw-medium">{% firstof user.profile.job_function user.email %}</p>
             </div>
             <div class="p-2">
               <a class="dropdown-item d-flex align-items-center justify-content-between"

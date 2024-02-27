@@ -28,6 +28,8 @@ urlpatterns = [
     path('register/', include('register.urls')),
     path('sales/', include('sales.urls')),
     path('users/', include('users.urls')),
+    path('finances/', include('finances.urls')),
+    path('siagri/', include('siagri.urls')),
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

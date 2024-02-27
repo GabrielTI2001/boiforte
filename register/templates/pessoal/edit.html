@@ -10,11 +10,8 @@
         <li class="breadcrumb-item fw-bold">
             <a class="link-fx text-success" href="{% url 'cadpessoal.index' %}">Cadastro Pessoal</a>
         </li>
-        <li class="breadcrumb-item fw-bold">
-            <a class="link-fx text-success" href="{% url 'cadpessoal.edit' uuid %}">{{ fantasia }}</a>
-        </li>
         <li class="breadcrumb-item fw-bold" aria-current="page">
-            Editar
+            {{ fantasia }}
         </li>
     </ol>
 </div>
