@@ -2,6 +2,7 @@ from pathlib import Path
 import environ, os
 env = environ.Env()
 environ.Env.read_env()
+import cx_Oracle
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -99,6 +100,7 @@ BOIFORTE_DB_HOST = env('BOIFORTE_DB_HOST')
 BOIFORTE_DB_PORT = env('BOIFORTE_DB_PORT')
 BOIFORTE_DB_SID = env('BOIFORTE_DB_SID')
 ORACLE_CLIENT = env('ORACLE_CLIENT')
+cx_Oracle.init_oracle_client(lib_dir=ORACLE_CLIENT) #inicializar apenas uma vez durante todo o ciclo de vida da aplicação
 
 
 # Password validation
