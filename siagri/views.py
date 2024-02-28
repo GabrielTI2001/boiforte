@@ -1,41 +1,41 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 from boiforte.settings import BOIFORTE_DB_HOST, BOIFORTE_DB_PASS, BOIFORTE_DB_PORT, BOIFORTE_DB_USER, BOIFORTE_DB_SID
-import oracledb
+import cx_Oracle
 import pandas as pd
 
 @login_required
 def index_siagri(request):
-    # Configurar os parâmetros de conexão
-    # dsn_tns = cx_Oracle.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, BOIFORTE_DB_SID)
-    # search = request.GET.get('search')  
+    #Configurar os parâmetros de conexão
+    dsn_tns = cx_Oracle.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, BOIFORTE_DB_SID)
+    search = request.GET.get('search')  
 
-    # # Estabelecer a conexão
-    # try:
-    #     conexao = cx_Oracle.connect(BOIFORTE_DB_USER, BOIFORTE_DB_PASS, dsn_tns)
+    # Estabelecer a conexão
+    try:
+        conexao = cx_Oracle.connect(BOIFORTE_DB_USER, BOIFORTE_DB_PASS, dsn_tns)
 
-    #     # Criar um cursor
-    #     cursor = conexao.cursor()
+        # Criar um cursor
+        cursor = conexao.cursor()
         
-    #     # Consulta SQL
-    #     consulta_sql = f"SELECT RAZA_TRA, CGC_TRA FROM TRANSAC"
+        # Consulta SQL
+        consulta_sql = f"SELECT RAZA_TRA, CGC_TRA FROM TRANSAC"
         
-    #     # Executar a consulta
-    #     cursor.execute(consulta_sql)
+        # Executar a consulta
+        cursor.execute(consulta_sql)
         
-    #     # Recuperar os resultados como uma lista de dicionários
-    #     #colunas = ["nome", "cgc"]
-    #     colunas = [col[0] for col in cursor.description]
-    #     resultados = [dict(zip(colunas, row)) for row in cursor.fetchall()]
+        # Recuperar os resultados como uma lista de dicionários
+        #colunas = ["nome", "cgc"]
+        colunas = [col[0] for col in cursor.description]
+        resultados = [dict(zip(colunas, row)) for row in cursor.fetchall()]
         
-    #     # Fechar o cursor e a conexão
-    #     cursor.close()
-    #     conexao.close()
-    #     return render(request, 'index_siagri.html', {'dados': resultados}) 
+        # Fechar o cursor e a conexão
+        cursor.close()
+        conexao.close()
+        return render(request, 'index_siagri.html', {'dados': resultados}) 
         
-    # except cx_Oracle.DatabaseError as e:
-    #     print("Erro ao conectar ao banco de dados:", e)
-    #     return render(request, 'index_siagri.html')
+    except cx_Oracle.DatabaseError as e:
+        print("Erro ao conectar ao banco de dados:", e)
+        return render(request, 'index_siagri.html')
     
     return render(request, 'index_siagri.html')
 
@@ -115,8 +115,8 @@ def siagri_contas_pagar(request):
         and (CPG.CODI_EMP in ('1','2','3','4','5','6'))   and ((select VALOR from  table(VALOR_ABERTO_PAGAR(PAG.CTRL_PAG))) > 0)
         """
     
-    dsn_tns = oracledb.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, BOIFORTE_DB_SID)
-    conexao = oracledb.connect(BOIFORTE_DB_USER, BOIFORTE_DB_PASS, dsn_tns)
+    dsn_tns = cx_Oracle.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, BOIFORTE_DB_SID)
+    conexao = cx_Oracle.connect(BOIFORTE_DB_USER, BOIFORTE_DB_PASS, dsn_tns)
     # Carregar os resultados da consulta em um DataFrame
     df = pd.read_sql_query(query_sql, conexao)
     
