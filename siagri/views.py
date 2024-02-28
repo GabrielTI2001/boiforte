@@ -36,8 +36,6 @@ def index_siagri(request):
     except cx_Oracle.DatabaseError as e:
         print("Erro ao conectar ao banco de dados:", e)
         return render(request, 'index_siagri.html')
-    
-    return render(request, 'index_siagri.html')
 
 
 @login_required
