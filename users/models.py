@@ -11,7 +11,7 @@ class MyAppPermissions(models.Model):
         ]
 
 class Profile(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4(), unique=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     job_function = models.CharField(max_length=255, null=True, verbose_name='Cargo ou Função')
     cpf =  models.CharField(max_length=255, null=True, verbose_name='CPF')
