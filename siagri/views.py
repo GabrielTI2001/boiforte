@@ -42,7 +42,7 @@ def index_siagri(request):
 import cx_Oracle
 @login_required
 def siagri_contas_pagar(request):
-    
+    cx_Oracle.init_oracle_client(lib_dir="/root/download/instantclient_21_13")
    
     sql_query = "SELECT RAZA_TRA FROM TRANSAC"
     dsn = cx_Oracle.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, service_name=BOIFORTE_DB_SID)  # ou SID se estiver usando SID em vez de serviço
