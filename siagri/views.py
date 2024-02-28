@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
-from boiforte.settings import BOIFORTE_DB_HOST, BOIFORTE_DB_PASS, BOIFORTE_DB_PORT, BOIFORTE_DB_USER, BOIFORTE_DB_SID, SO
+from boiforte.settings import BOIFORTE_DB_HOST, BOIFORTE_DB_PASS, BOIFORTE_DB_PORT, BOIFORTE_DB_USER, BOIFORTE_DB_SID, ORACLE_CLIENT
 import oracledb
 import pandas as pd
 
@@ -42,16 +42,12 @@ def index_siagri(request):
 import cx_Oracle
 @login_required
 def siagri_contas_pagar(request):
-    if SO == 'WINDOWS':
-        cx_Oracle.init_oracle_client(lib_dir="C:/Users/gabri/Downloads/instantclient_21_13")
-    else:
-        cx_Oracle.init_oracle_client(config_dir="/root/download/instantclient_21_13")
-    sql_query = "SELECT RAZA_TRA FROM TRANSAC"
-    dsn = cx_Oracle.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, service_name=BOIFORTE_DB_SID)  # ou SID se estiver usando SID em vez de serviço
 
-    
-    # Estabelecer conexão
+    cx_Oracle.init_oracle_client(lib_dir=ORACLE_CLIENT)
+    dsn = cx_Oracle.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, service_name=BOIFORTE_DB_SID)  # ou SID se estiver usando SID em vez de serviço
     conn = cx_Oracle.connect(user=BOIFORTE_DB_USER, password=BOIFORTE_DB_PASS, dsn=dsn)
+
+    sql_query = "SELECT RAZA_TRA FROM TRANSAC"
 
     # Criar um cursor
     cursor = conn.cursor()
