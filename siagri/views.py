@@ -42,93 +42,19 @@ def index_siagri(request):
 
 @login_required
 def siagri_contas_pagar(request):
-
-    query_sql = f"""
-        select CPG.CODI_TRA 
-        , TRA.RAZA_TRA 
-        , TRA.TEL1_TRA 
-        , TRA.FAX_TRA 
-        , TRA.EMCF_TRA 
-        , CPG.CODI_EMP 
-        , CPG.DOCU_CPG 
-        , PAG.NPAR_PAG 
-        , CPG.DMOV_CPG 
-        , PAG.DVEN_PAG 
-        , PAG.CODI_TCO 
-        , PAG.CODI_POR 
-        , PAG.CTRL_CPG 
-        , PAG.CTRL_PAG 
-        , PAG.VLOR_PAG 
-        , (select VALOR from  table(VALOR_ABERTO_PAGAR(PAG.CTRL_PAG))) as SALD_PAG 
-        , CPG.DATA_VLR 
-        , CPG.CODI_IND 
-        , TDO.DESC_TDO 
-        , TDO.TIPO_TDO 
-        , TDO.CODI_TDO 
-        , IND.ABRE_IND 
-        , PAG.HIST_PAG 
-        , POR.DESC_POR 
-        , CPG.COND_CON 
-        , FRN.CODI_CTF 
-        , PAG.DPON_PAG 
-        , TRA.TJUR_TRA 
-        , TRA.CGC_TRA 
-        , TCO.DESC_TCO 
-        , CTF.DESC_CTF 
-        , PAG.CONT_PAG 
-        , PAG.DANT_PAG 
-        , PAG.JURO_PAG 
-        , PAG.JATV_PAG 
-        , PAG.JAPV_PAG 
-        , PAG.DINI_PAG 
-        , PAG.MULT_PAG 
-        , PAG.ICTB_PAG 
-        , PAG.TDPT_PAG 
-        , TRA.CEND_TRA 
-        , TRA.CNUM_TRA 
-        , TRA.CBAI_TRA 
-        , MUN.DESC_MUN 
-        , MUN.ESTA_MUN 
-        , cast(0 as double precision) as VALOR_UNITARIO_ITEM 
-        , cast(0 as double precision) as QUANTIDADE_ITEM 
-        , cast(0 as double precision) as RETENCOES_ITEM 
-        , cast(0 as double precision) as VALOR_TOTAL_NOTA 
-        , cast(null as integer) as NUME_CCP 
-        from PAGAR PAG 
-        
-        join CABPAGAR CPG on (CPG.CTRL_CPG = PAG.CTRL_CPG) 
-        join TRANSAC TRA on (TRA.CODI_TRA = CPG.CODI_TRA) 
-        join TIPDOC TDO on (TDO.CODI_TDO = CPG.CODI_TDO) 
-        join TIPCOB TCO on (PAG.CODI_TCO = TCO.CODI_TCO) 
-        join PORTADOR POR on (POR.CODI_POR = PAG.CODI_POR) 
-        left join FORNEC FRN on (FRN.CODI_TRA = CPG.CODI_TRA) 
-        left join CATEGFOR CTF on (CTF.CODI_CTF = FRN.CODI_CTF) 
-        left join INDEXADOR IND on (IND.CODI_IND = CPG.CODI_IND) 
-        left join MUNICIPIO MUN on (TRA.CODI_MUN = MUN.CODI_MUN) 
-        where not exists(select * 
-            from RCPPAGAR RCP 
-            where (RCP.CTRL_PAG = PAG.CTRL_PAG) 
-            and (RCP.TIPO_RCP = 'R') 
-            and (RCP.VLOR_RCP = PAG.VLOR_PAG)) 
-        and (CPG.DMOV_CPG between '01/01/1900' and '30/12/2999')   and (PAG.DVEN_PAG between '01/01/1900' and '30/12/2999')   
-        and (TDO.CODI_TDO in ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','18','19','23','25','26','27','28','29','30','31','32','33','34','35','36','37','40','41','50','51','60','61','101','102','103','104','105','106','107','108','110','10000001','10000003','10000004','10000005','10000006','10000007','10000008','10000009','10000010','10000011','10000012','30000001','30000002'))   
-        and (CPG.CODI_EMP in ('1','2','3','4','5','6'))   and ((select VALOR from  table(VALOR_ABERTO_PAGAR(PAG.CTRL_PAG))) > 0)
-        """
+   
+    sql_query = "SELECT RAZA_TRA FROM TRANSAC"
     
-    dsn_tns = oracledb.makedsn(BOIFORTE_DB_HOST, BOIFORTE_DB_PORT, BOIFORTE_DB_SID)
-    conexao = oracledb.connect(BOIFORTE_DB_USER, BOIFORTE_DB_PASS, dsn_tns)
-    # Carregar os resultados da consulta em um DataFrame
-    df = pd.read_sql_query(query_sql, conexao)
+    params = oracledb.ConnectParams(host=BOIFORTE_DB_HOST, port=BOIFORTE_DB_PORT, service_name=BOIFORTE_DB_SID)
+    conn = oracledb.connect(user=BOIFORTE_DB_USER, password=BOIFORTE_DB_PASS, params=params)
     
-    soma_coluna = df['SALD_PAG'].sum()
-    
-    cursor = conexao.cursor()
-    cursor.execute(query_sql)
+    cursor = conn.cursor()
+    cursor.execute(sql_query)
     #colunas = ["nome", "cgc"]
-    #colunas = [col[0] for col in cursor.description]
-    #resultados = [dict(zip(colunas, row)) for row in cursor.fetchall()]
+    colunas = [col[0] for col in cursor.description]
+    resultados = [dict(zip(colunas, row)) for row in cursor.fetchall()]
 
-    return render(request, 'pagar.html', {'resultado': soma_coluna})
+    return render(request, 'pagar.html', {'resultados': resultados})
 
 
 
