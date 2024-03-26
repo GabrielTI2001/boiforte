@@ -7,7 +7,6 @@ from sales.models import Venda
 from django.db.models import Sum
 import locale
 
-# Create your views here.
 @login_required
 def home(request):
     current_date = date.today()
@@ -20,13 +19,9 @@ def home(request):
         'ano': current_date.year,
     }
     
-    #total de vendas
-    total_vendas = Venda.objects.values('valor').aggregate(total=Sum('valor'))['total'] or 0
-
     context = {
         'user_avatar': request.user.profile.avatar,
         'str_today': data_formatada,
-        'total_vendas': locale.currency(total_vendas, grouping=True)
     }
     
     return render(request, 'home.html', context)

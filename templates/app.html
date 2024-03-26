@@ -31,19 +31,19 @@
         <nav class="d-none d-lg-block mt-2 mt-lg-0">
           <ul class="nav-main nav-main-horizontal nav-main-hover">
             <li class="nav-main-item">
-              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                aria-expanded="false" href="#">
+              <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false">
                 <i class="nav-main-link-icon fa-solid fa-users-line"></i>
                 <span class="nav-main-link-name">Cadastro</span>
-              </a>
+            </div>
               <ul class="nav-main-submenu">
                 {% if perms.register.view_cadastro_pessoal %}
                 <li class="nav-main-item">
-                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                    aria-expanded="false" href="#">
+                  <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                    aria-expanded="false">
                     <i class="nav-main-link-icon fa-solid fa-users"></i>
                     <span class="nav-main-link-name">Cadastro Pessoal</span>
-                  </a>
+                </div>
                   <ul class="nav-main-submenu">
                     <li class="nav-main-item">
                       <a class="nav-main-link" href="{%url 'cadpessoal.index' %}">
@@ -51,25 +51,17 @@
                         <span class="nav-main-link-name">Registros</span>
                       </a>
                     </li>
-                    {% if perms.register.add_cadastro_pessoal %}
-                    <li class="nav-main-item">
-                      <a class="nav-main-link" href="{%url 'cadpessoal.new' %}">
-                        <i class="nav-main-link-icon fa-solid fa-plus"></i>
-                        <span class="nav-main-link-name">Novo Cadastro</span>
-                      </a>
-                    </li>
-                    {% endif %}
                   </ul>
                 </li>
                 {% endif %}
 
                 {% if perms.users.gerenciar_usuarios %}
                   <li class="nav-main-item">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                      aria-expanded="false" href="#">
+                    <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                      aria-expanded="false">
                       <i class="nav-main-link-icon fa-solid fa-user"></i>
                       <span class="nav-main-link-name">Cadastro Usuários</span>
-                    </a>
+                  </div>
                     <ul class="nav-main-submenu">
                       <li class="nav-main-item">
                         <a class="nav-main-link" href="{% url 'users.index' %}">
@@ -91,66 +83,65 @@
             </li>
 
             <li class="nav-main-item">
-              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                aria-expanded="false" href="#">
+              <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false">
                 <i class="nav-main-link-icon fa-solid fa-money-bill-wave"></i>
-                <span class="nav-main-link-name">Vendas</span>
-              </a>
+                <span class="nav-main-link-name">Financeiro</span>
+            </div>
               
               <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                    aria-expanded="false" href="">
-                    <i class="nav-main-link-icon"></i>
-                    <span class="nav-main-link-name">Cadastro</span>
-                  </a>
+                  <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="nav-main-link-icon fa-solid fa-coins"></i>
+                    <span class="nav-main-link-name">Contas</span>
+                </div>
                   <ul class="nav-main-submenu">
-                    {% if perms.sales.add_venda %}
                     <li class="nav-main-item">
-                      <a class="nav-main-link" href="{% url 'vendas.index' %}">
-                        <i class="nav-main-link-icon"></i>
-                        <span class="nav-main-link-name">Registros</span>
+                      <a class="nav-main-link" href="{% url 'siagri.contas.pagar.receber' %}">
+                        <i class="nav-main-link-icon fa-solid fa-money-bill-wave"></i>
+                        <span class="nav-main-link-name">Pagar/Receber</span>
                       </a>
                     </li>
-                    {% endif %}
+
+
+                 
                   </ul>
               </ul>
             </li>
 
             <li class="nav-main-item">
-              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                aria-expanded="false" href="#">
+              <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false">
                 <i class="nav-main-link-icon fa-solid fa-chart-line"></i>
                 <span class="nav-main-link-name">Dashboards</span>
-              </a>
+            </div>
               <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                    aria-expanded="false" href="#">
-                    <i class="nav-main-link-icon"></i>
-                    <span class="nav-main-link-name">Vendas</span>
-                  </a>
+                  <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="nav-main-link-icon fa-solid fa-chart-line"></i>
+                    <span class="nav-main-link-name">Dashboards</span>
+                </div>
                   <ul class="nav-main-submenu">
 
-                    {% if perms %}
                     <li class="nav-main-item">
-                      <a class="nav-main-link" href="{% url 'dashboard.vendas'%}">
-                        <i class="nav-main-link-icon"></i>
-                        <span class="nav-main-link-name">Ranking Vendas</span>
+                      <a class="nav-main-link" href="{% url 'dashboard.index' %}">
+                        <i class="nav-main-link-icon fa-solid fa-chart-simple"></i>
+                        <span class="nav-main-link-name">Dashboard</span>
                       </a>
                     </li>
-                    {% endif %}
                   </ul>
               </ul>
             </li>
 
             {% if user.is_superuser %}
               <li class="nav-main-item">
-                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                  aria-expanded="false" href="#">
+                <div class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                  aria-expanded="false">
                   <i class="nav-main-link-icon fa-solid fa-wrench"></i>
                   <span class="nav-main-link-name">Admin</span>
-                </a>
+              </div>
                 <ul class="nav-main-submenu">
                   <li class="nav-main-item">
                     <a class="nav-main-link" href="{% url 'admin:index' %}">
@@ -222,18 +213,28 @@
 
   </div>
 
+
+  <div id="loading-screen" style="display:flex;">
+    <div class="loading-icon">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Carregando...</span>
+    </div>
+  </div>
+
   <script src="{% static '/js/oneui.app.min.js' %}"></script>
-
   <script src="{% static '/js/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
-
   <script src="{% static '/js/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
   <script src="{% static '/js/pages/op_auth_signin.min.js' %}"></script>
   <script src="{% static '/js/plugins/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+  <script src="{% static '/js/main.js' %}"></script>
+
+  {% block js-footer %}
+
+
+  {% endblock %}
 
 </body>
 
-{% block js-footer %}
 
-{% endblock %}
 
 </html>

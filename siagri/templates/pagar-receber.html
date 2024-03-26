@@ -1,0 +1,173 @@
+{% extends 'app.html' %}
+{% load static %}
+{% block title %} Contas a Pagar e Receber {% endblock %}
+
+{% block css-header %}
+
+<link rel="stylesheet" href="{% static 'js/plugins/select2/css/select2.css' %}">
+
+<style>
+    .form-check {
+        width: 50px;
+    }
+
+    .form-check input {
+        margin-right: 3px;
+    }
+
+    .col-xxl-3 div div {
+        display: flex;
+        flex-wrap: wrap;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-0">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Contas Pagar e Receber
+        </li>
+    </ol>
+</div>
+
+<div class="col-sm-12 col-xxl-12 mb-0 form-group">
+    <form method="GET" class="row" id="search-form">
+        <div class="col-sm-2 col-xxl-2 form-group mb-0">
+            <label for="start">Data Início</label>
+            <input type="date" class="form-control form-control-alt" name="start" value="{{ search_start }}">
+        </div>
+
+        <div class="col-sm-2 col-xxl-2 form-group mb-0">
+            <label for="end">Data Limite</label>
+            <input type="date" class="form-control" name="end" value="{{ search_end }}">
+        </div>
+
+        <div class="col-lg-8 col-xl-6">
+            <div class="mb-4">
+                <label for="store">Lojas</label>
+                <select class="form-control form-select form-control-alt js-select2" id="select2-store" name="store"
+                    style="width: 100%;" multiple>
+                    {% for loja in lojas %}
+                    <option value="{{ loja.codi_emp }}" {% if loja.codi_emp|stringformat:"s" in search_store %}selected{% endif %}>{{ loja.codi_emp}} - {{ loja.iden_emp }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xxl-2 form-group mb-0">
+            <button type="submit" class="btn btn-alt-success shadow-none mt-4"><i class="fa fa-search me-2"></i>Search</button>
+        </div>
+    </form>
+</div>
+
+<div class="row items-push">
+
+    <div class="col-md-6 col-xl-3 mb-0">
+        <a class="block block-rounded block-link-pop" href="{% url 'siagri.contas.pagar' %}">
+            <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+                <div>
+                    <i class="fa fa-2x fa-regular fa-money-bill-1"></i>
+                </div>
+                <dl class="ms-3 text-end mb-0">
+                    <dt class="h6 fw-extrabold text-primary mb-0">
+                        R$ {{ total_pagar }}
+                    </dt>
+                    <dd class="fs-xs fw-medium text-muted mb-0">
+                        Total a pagar
+                    </dd>
+                </dl>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-xl-3 mb-0">
+        <a class="block block-rounded block-link-pop" href="{% url 'siagri.contas.pagar' %}">
+            <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+                <div>
+                    <i class="fa fa-2x fa-regular fa-money-bill-1"></i>
+                </div>
+                <dl class="ms-3 text-end mb-0">
+                    <dt class="h6 fw-extrabold text-warning mb-0">
+                        R$ {{ total_pagar_vencidos }}
+                    </dt>
+                    <dd class="fs-xs fw-medium text-muted mb-0">
+                        Vencidos a pagar
+                    </dd>
+                </dl>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-xl-3 mb-0">
+        <a class="block block-rounded block-link-pop" href="{% url 'siagri.contas.receber' %}">
+            <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+                <div>
+                    <i class="fa fa-2x fa-regular fa-money-bill-1"></i>
+                </div>
+                <dl class="ms-3 text-end mb-0">
+                    <dt class="h6 fw-extrabold text-primary mb-0">
+                        R$ {{ total_receber }}
+                    </dt>
+                    <dd class="fs-xs fw-medium text-muted mb-0">
+                        Total a receber
+                    </dd>
+                </dl>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-xl-3 mb-0">
+        <a class="block block-rounded block-link-pop" href="{% url 'siagri.contas.receber' %}">
+            <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+                <div>
+                    <i class="fa fa-2x fa-regular fa-money-bill-1"></i>
+                </div>
+                <dl class="ms-3 text-end mb-0">
+                    <dt class="h6 fw-extrabold text-warning mb-0">
+                        R$ {{ total_receber_vencidos }}
+                    </dt>
+                    <dd class="fs-xs fw-medium text-muted mb-0">
+                        Vencidos a receber
+                    </dd>
+                </dl>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+
+<div class="row items-push">
+
+    <div class="col-md-6 col-xl-6 mb-0" id="chart-pagar">
+
+
+
+    </div>
+
+    <div class="col-md-6 col-xl-6 mb-0" id="chart-receber">
+
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+{% block js-footer %}
+
+{{ resultados_pagar|json_script:"resultados_pagar" }}
+{{ resultados_receber|json_script:"resultados_receber" }}
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'js/lib/siagri/pagar.js' %}"></script>
+
+<script src="{% static 'js/plugins/select2/js/select2.full.min.js' %}"></script>
+
+<script>One.helpersOnLoad(['jq-select2']);</script>
+
+{% endblock %}

@@ -1,14 +1,46 @@
 {% extends 'app.html' %}
 {% load static %}
-{% block title %} Contas a Pagar {% endblock %}
+{% block title %} Contas a Receber {% endblock %}
+
+{% block css-header %}
+
+
+{% endblock %}
+
 {% block content %}
 
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-<div id="chart" style="width: 400px; height: 500px;">
-
+<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 mb-0">
+    <ol class="breadcrumb breadcrumb-alt">
+        <li class="breadcrumb-item fw-bold" aria-current="page">
+            Contas a Receber
+        </li>
+    </ol>
 </div>
 
+<div class="tabela">
+    <table>
+        <thead>
+            <th style="width: 10%;">Data Venc.</th>
+            <th style="width: 15%;">Loja</th>
+            <th style="width: 10%;">N° Parcela</th>
+            <th style="width: 40%;">Razão Social</th>
+            <th style="width: 15%;">Valor (R$)</th>
+            <th style="width: 10%;">Status</th>
+        </thead>
 
+        <tbody>
+            {% for registro in resultados %}
+            <tr>
+                <td>{{ registro.data_vencimento }}</td>
+                <td>{{ registro.empresa }}</td>
+                <td>{{ registro.parcela }}</td>
+                <td>{{ registro.razao_social }}</td>
+                <td>{{ registro.valor_pagamento }}</td>
+                <td class="badge bg-{{ registro.status.color }}">{{ registro.status.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

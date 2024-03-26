@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="{% static '/css/login_style.css' %}">
   <link rel="stylesheet" id="css-main" href="{% static '/css/oneui.min.css' %}">
+  <script src="{% static '/js/lib/jquery.min.js' %}"></script>
 </head>
 
 <style>
@@ -33,6 +34,30 @@
     list-style-type: none;
     text-align: center;
   }
+
+    #loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   
 </style>
 
@@ -50,15 +75,16 @@
                       <a href="https://www.boiforte.com"><img src="{% static 'media/various/logo-boi-forte.png' %}" alt="Logo Boi Forte" style="width: 140px;"></a>
                     </div>
                     <div class="px-4 py-5 pt-2">
-                      <form method="POST">
+                      <form method="POST" id="#login-form">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <div class="mt-2 text-center">
                           <div>
                             <a href="{% url 'account_reset_password' %}"class="fw-bold fs-xs text-primary">Esqueceu sua senha?</a>
                           </div>
-                          <button type="submit" class="btn btn-alt-success shadow-none fs-xs mb-4 mt-4" style="width: 140px; background-color: rgb(39, 67, 27); color: rgb(255, 255, 255);">
+                          <button type="submit" class="btn btn-alt-success shadow-none fs-xs mb-4 mt-4" style="width: 140px; background-color: rgb(39, 67, 27); color: rgb(255, 255, 255);" id="register-btn">
                             <i class="fa fa-fw fa-sign-in-alt me-1 fs-xs"></i>Login
+                            <div id="loader" style="display: none;"></div>
                           </button>
                           <div>
                             <span class="fw-semibold fs-xs"><a href="{% url 'account_signup' %}" class="text-primary fw-bold">Clique aqui </a> para criar sua conta</span>
@@ -82,7 +108,12 @@
 </body>
 
 <script>
-  sessionStorage.clear();
+  $(document).ready(function () {
+      $('#login-form').submit(function () {
+        $('#register-btn').attr('disabled', true);
+        $('#loader').show();
+      });
+    });
 </script>
 
 </html>

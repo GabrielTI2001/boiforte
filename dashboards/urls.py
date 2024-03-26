@@ -2,5 +2,5 @@ from . import views
 from django.urls import path, include
 
 urlpatterns = [
-    path('sales-ranking', views.dashboard_vendas, name='dashboard.vendas'),
+    path('', views.dashboard_index, name='dashboard.index'),
 ]

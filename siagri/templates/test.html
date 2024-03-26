@@ -1,0 +1,27 @@
+{% extends 'app.html' %}
+{% load static %}
+{% block title %} ERP SIAGRI {% endblock %}
+{% block content %}
+
+
+
+
+
+<table>
+    <tbody>
+    {% for resultado in resultados %}
+    <tr>
+        <td>{{ resultado.CODI_PSV }}</td>
+        <td>{{ resultado.DESC_PSV }}</td>
+        <td>{{ resultado.IDEN_EMP }}</td>
+        <td>{{ resultado.EST_FIS }}</td>
+        <td>{{ resultado.EST_DIS }}</td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+
+{% endblock %}

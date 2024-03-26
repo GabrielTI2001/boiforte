@@ -57,7 +57,7 @@ p {
 }
 
 th {
-    background-color: rgba(1, 115, 53, .7) !important;
+    background-color: rgba(1, 115, 53, 1) !important;
     color: rgb(255, 255, 255) !important;
     font-size: 12px !important;
 }
@@ -122,3 +122,29 @@ table th {
     font-size: 11px;
 }
 
+
+#loading-screen {
+    position: absolute; /* ou 'relative', dependendo da sua estrutura */
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content { /* ou o seletor apropriado para o seu container de conteúdo */
+    position: relative; /* Faz com que o #loading-screen posicione-se relativamente a este elemento */
+}
+
+.fa-search {
+    cursor: pointer;
+}
+
+
+.nav-main-link{
+    cursor: pointer;
+}

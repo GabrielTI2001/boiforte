@@ -20,16 +20,15 @@
 
 <div class="d-flex py-2">
     <div class="flex-shrink-0 me-3 ms-0 overlay-container overlay-bottom">
-        <img class="img-avatar img-avatar-thumb" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" alt="Avatar User" style="width: 70px; height: 70px;">
+        <img class="img-avatar img-avatar-thumb" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" alt="Avatar User" style="width: 45px; height: 45px;">
 
     </div>
-    <div class="flex-grow-1 mt-3">
+    <div class="flex-grow-1 mt-1">
         <div class="fw-bold text-dark">{{ first_name }} {{ last_name }}</div>
         <div class="fs-xs fw-semibold text-muted">{{ user_job }}</div>
     </div>
 </div>
 
-<hr>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -44,6 +43,8 @@
                 {{formusuario.last_name|as_crispy_field}}
             </div>
         </div>
+    </div>
+    <div class="row items-push">
         <div class="col-sm-6 col-xxl-3 mb-0">
             <div class="form-group">
                 {{formusuario.username|as_crispy_field}}
@@ -54,19 +55,22 @@
                 {{formprofile.job_function|as_crispy_field}}
             </div>
         </div>
+
     </div>
     <div class="row items-push">
-        <div class="col-sm-6 col-xxl-2 mb-0">
+        <div class="col-sm-6 col-xxl-3 mb-0">
             <div class="form-group">
                 {{formprofile.cpf|as_crispy_field}}
             </div>
         </div>
-        <div class="col-sm-6 col-xxl-2 mb-0">
+        <div class="col-sm-6 col-xxl-3 mb-0">
             <div class="form-group">
                 {{formprofile.birthday|as_crispy_field}}
             </div>
         </div>
+    </div>
 
+    <div class="row items-push">
         <div class="col-sm-6 col-xxl-1 mb-0">
             <div class="form-group">
                 <label class="form-label">Seu Avatar</label>
@@ -76,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-xxl-4 mb-0">
+        <div class="col-sm-6 col-xxl-5 mb-0">
             <div class="form-group">
                 {{formprofile.avatar|as_crispy_field}}
             </div>
