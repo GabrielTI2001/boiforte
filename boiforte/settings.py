@@ -87,7 +87,7 @@ DATABASES = {
         'HOST': env('DATABASE_HOST'),
         'PORT': 3306,
         'OPTIONS': {
-            'init_command': "SET default_storage_engine=INNODB",
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1;",
         }
     }
 }
